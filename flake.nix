@@ -60,6 +60,11 @@
           core = import ./modules/boards/rock5a.nix;
           sd-image = ./modules/sd-image/rock5a.nix;
         };
+        # Turing RK1 SBC
+        turingrk1 = {   
+          core = import ./modules/boards/turingrk1.nix;
+          sd-image = ./modules/sd-image/turingrk1.nix;
+        };
       };
 
       nixosConfigurations =
@@ -140,15 +145,18 @@
         sdImage-opi5 = self.nixosConfigurations.orangepi5.config.system.build.sdImage;
         sdImage-opi5plus = self.nixosConfigurations.orangepi5plus.config.system.build.sdImage;
         sdImage-rock5a = self.nixosConfigurations.rock5a.config.system.build.sdImage;
+        sdImage-turingrk1 = self.nixosConfigurations.turingrk1.config.system.build.sdImage;
 
         sdImage-opi5-cross = self.nixosConfigurations.orangepi5-cross.config.system.build.sdImage;
         sdImage-opi5plus-cross = self.nixosConfigurations.orangepi5plus-cross.config.system.build.sdImage;
         sdImage-rock5a-cross = self.nixosConfigurations.rock5a-cross.config.system.build.sdImage;
+        sdImage-turingrk1-cross = self.nixosConfigurations.turingrk1-cross.config.system.build.sdImage;
 
         # UEFI raw image
         rawEfiImage-opi5 = self.nixosConfigurations.orangepi5-uefi.config.formats.raw-efi;
         rawEfiImage-opi5plus = self.nixosConfigurations.orangepi5plus-uefi.config.formats.raw-efi;
         rawEfiImage-rock5a = self.nixosConfigurations.rock5a-uefi.config.formats.raw-efi;
+        rawEfiImage-turingrk1 = self.nixosConfigurations.turingrk1-uefi.config.formats.raw-efi;
       };
 
       # the custom kernel for debugging
