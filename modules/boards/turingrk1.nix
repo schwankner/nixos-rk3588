@@ -20,7 +20,8 @@ in {
 
       "earlycon" # enable early console, so we can see the boot messages via serial port / HDMI
       "consoleblank=0" # disable console blanking(screen saver)
-      "console=ttyS0,115200" # serial port
+      "console=ttyS9,115200" # serial port
+      "console=ttyS2,1500000" 
       "console=tty1" # HDMI
 
       # docker optimizations
