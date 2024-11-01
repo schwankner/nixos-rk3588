@@ -73,6 +73,11 @@
             core = import ./modules/boards/rock5a.nix;
             sd-image = ./modules/sd-image/rock5a.nix;
           };
+          # Turing RK1 SBC
+          turingrk1 = {   
+            core = import ./modules/boards/turingrk1.nix;
+            sd-image = ./modules/sd-image/turingrk1.nix;
+          };
         };
 
         formats = { config, ... }: {
@@ -82,11 +87,6 @@
 
           nixpkgs.hostPlatform = aarch64System;
           formatConfigs.rk3588-raw-efi = import ./modules/rk3588-raw-efi.nix;
-        };
-        # Turing RK1 SBC
-        turingrk1 = {   
-          core = import ./modules/boards/turingrk1.nix;
-          sd-image = ./modules/sd-image/turingrk1.nix;
         };
       };
 

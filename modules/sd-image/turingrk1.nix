@@ -1,10 +1,16 @@
 {
   lib,
   config,
+  pkgs,
   rk3588,
   ...
 }: let
   rootPartitionUUID = "14e19a7b-0ae0-484d-9d54-43bd6fdc20c7";
+
+  trace = builtins.trace (builtins.getEnv "PWD") "Aktuelles Verzeichnis im Buildprozess:";
+ 
+  uboot = pkgs.callPackage ./../../pkgs/u-boot-turingrk1/prebuilt.nix {};
+#  uboot = pkgs.callPackage /home/mrmoor/nixos-rk3588/pkgs/u-boot-turingrk1/prebuilt.nix {};
 in {
   imports = [
     "${rk3588.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -27,7 +33,7 @@ in {
   # https://github.com/armbian/linux-rockchip/tree/rk-6.1-rkr1/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dts
   hardware = {
     deviceTree = {
-      name = "rockchip/rk3588-turing-rk1.dts";
+      name = "rockchip/rk3588-turing-rk1.dtb";
     };
 
     firmware = [];
@@ -49,6 +55,13 @@ in {
 
     populateRootCommands = ''
       mkdir -p ./files/boot
+    '';
+
+    postBuildCommands = ''
+      # places the U-Boot image at block first at block 64 (0x40)
+      dd if=/dev/zero of=$img bs=1M count=8
+      dd if=${uboot}/idbloader.img of=$img seek=64 conv=notrunc
+      dd if=${uboot}/u-boot.itb of=$img seek=16384 conv=notrunc
     '';
   };
 }
