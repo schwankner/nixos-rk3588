@@ -55,7 +55,6 @@ in {
 
     postBuildCommands = ''
       # places the U-Boot image at block first at block 64 (0x40)
-      dd if=/dev/zero of=$img bs=1M count=8
       dd if=${uboot}/idbloader.img of=$img seek=64 conv=notrunc
       dd if=${uboot}/u-boot.itb of=$img seek=16384 conv=notrunc
     '';
